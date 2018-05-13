@@ -1,0 +1,10 @@
+﻿
+
+@model TweetsViewModel
+
+@foreach (var tweet in Model.tweetList)
+{
+    <p>id: @tweet.id</p>
+    <textarea>text: @tweet.text</textarea>
+    <p>stamp: @tweet.stamp</p>
+}
