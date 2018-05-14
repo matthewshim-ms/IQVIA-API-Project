@@ -17,6 +17,9 @@ namespace IQVIA_Project.Controllers
         {
             string original_start_date = "2016-01-01T00:00:00.001Z";
             DateTime original_start = DateTime.Parse(original_start_date);
+            var sanitized_time = original_start.ToLocalTime();
+            DateTime startDateUnspecifiedKind = sanitized_time.ToUniversalTime();
+            
 
             DateTime startDate = DateTime.Parse(original_start_date);
             string endDate = "2017-12-31T23%3A59%3A59.001Z";
@@ -49,7 +52,7 @@ namespace IQVIA_Project.Controllers
 
                             foreach (Tweet twt in listOfTweets)
                             {
-                                if (!tweetIDs.Contains(twt.id) && startDate > original_start)
+                                if (!tweetIDs.Contains(twt.id) && twt.stamp.Year >= startDateUnspecifiedKind.Year)
                                 {
                                     tweetIDs.Add(twt.id, 1);
                                     tweets.tweetList.Add(twt);
