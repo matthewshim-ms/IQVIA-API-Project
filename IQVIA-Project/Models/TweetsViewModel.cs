@@ -10,5 +10,6 @@ namespace IQVIA_Project.Models
     public class TweetsViewModel
     {
         public List<Tweet> tweetList = new List<Tweet>();
+        public long tweet_count = 0;
     }
 }
