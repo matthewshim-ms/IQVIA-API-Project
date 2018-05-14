@@ -19,8 +19,7 @@ namespace IQVIA_Project.Controllers
             DateTime original_start = DateTime.Parse(original_start_date);
             var sanitized_time = original_start.ToLocalTime();
             DateTime startDateUnspecifiedKind = sanitized_time.ToUniversalTime();
-            
-
+           
             DateTime startDate = DateTime.Parse(original_start_date);
             string endDate = "2017-12-31T23%3A59%3A59.001Z";
 
@@ -49,7 +48,6 @@ namespace IQVIA_Project.Controllers
                             string tweetList = await response.Content.ReadAsStringAsync();
                             listOfTweets = JsonConvert.DeserializeObject<List<Tweet>>(tweetList);
 
-
                             foreach (Tweet twt in listOfTweets)
                             {
                                 if (!tweetIDs.Contains(twt.id) && twt.stamp.Year >= startDateUnspecifiedKind.Year)
@@ -58,10 +56,14 @@ namespace IQVIA_Project.Controllers
                                     tweets.tweetList.Add(twt);
                                     tweets.tweet_count++;
                                 }
+                                else
+                                {
+                                    tweets.duplicate_count++;
+                                }
                             }
 
                             // # Method 2 - adding all, then use LINQ
-                            //tweets.tweetList.AddRange(listOfTweets);
+                            // tweets.tweetList.AddRange(listOfTweets);
 
                             // Get the maximum time stamp in the list of tweets, update the time stamp
                             startDate = listOfTweets.Max(t => t.stamp);
@@ -77,24 +79,17 @@ namespace IQVIA_Project.Controllers
                     }
                 }
 
-                //tweets = tweets.tweetList.Where(twt => twt.stamp >= original_start).Select<>ToList();
-
-                //tweets.tweetList = (from tweet in tweets.tweetList
-                //               where tweet.stamp >= original_start
-                //               select tweet).ToList();
-                
-
                 // # Method 2 - with LINQ
-                //listOfTweets = tweets.tweetList.GroupBy(x => x.id, (key, group) => group.First()).ToList();
-                //var nachos = listOfTweets.GroupBy(r => r.id).Select(g => new { Id = g.Key, Count = g.Count() }).Where(c => c.Count > 1).ToList();
+                //tweets.tweetList = (from tweet in tweets.tweetList
+                //                    where tweet.stamp >= startDateUnspecifiedKind
+                //                    select tweet).ToList();
 
-                // sw.Stop();
-                
             }
-            // var time_elapsed = sw.Elapsed;
+            // TESTING PURPOSES
+            //sw.Stop();
+            //var time_elapsed = sw.Elapsed;
             return View(tweets);   
         }
-
 
         public IActionResult Index()
         {
@@ -121,4 +116,3 @@ namespace IQVIA_Project.Controllers
         }
     }
 }
-//

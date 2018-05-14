@@ -2,7 +2,8 @@
 
 @model TweetsViewModel
 @{ 
-    <h2>No. Tweets: @Model.tweet_count</h2>
+    <h2>No. Tweets Found: @Model.tweet_count</h2>
+    <h2>Duplicate Tweets: @Model.duplicate_count</h2>
 }
 @foreach (var tweet in Model.tweetList)
 {
