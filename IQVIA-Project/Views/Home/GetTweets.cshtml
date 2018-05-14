@@ -1,6 +1,9 @@
 ﻿
 
 @model TweetsViewModel
+@{ 
+    <h2>No. Tweets: @Model.tweet_count</h2>
+}
 @foreach (var tweet in Model.tweetList)
 {
     <p>id: @tweet.id</p>

@@ -56,6 +56,7 @@ namespace IQVIA_Project.Controllers
                                 {
                                     tweetIDs.Add(twt.id, 1);
                                     tweets.tweetList.Add(twt);
+                                    tweets.tweet_count++;
                                 }
                             }
 
