@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +23,6 @@ namespace IQVIA_Project.Controllers
             string endDate = "2017-12-31T23%3A59%3A59.001Z";
 
             TweetsViewModel tweets = new TweetsViewModel();
-            Hashtable tweetIDs = new Hashtable();
 
             // Performance testing between using Hashtable vs. LINQ query
             // Stopwatch sw = new Stopwatch();
@@ -49,14 +47,17 @@ namespace IQVIA_Project.Controllers
 
                             foreach (Tweet twt in listOfTweets)
                             {
-                                if (!tweetIDs.Contains(twt.id) && twt.stamp.Year >= startDateUnspecifiedKind.Year)
+                                if (!tweets.tweetIDs.Contains(twt.id) && twt.stamp.Year >= startDateUnspecifiedKind.Year)
                                 {
-                                    tweetIDs.Add(twt.id, 1);
+                                    // adds ID to hash table
+                                    tweets.tweetIDs.Add(twt.id, 1);
+                                    // adds tweet object to list
                                     tweets.tweetList.Add(twt);
                                     tweets.tweet_count++;
                                 }
-                                else
+                                else if(tweets.tweetIDs.Contains(twt.id))
                                 {
+                                    // duplicate detected
                                     tweets.duplicate_count++;
                                 }
                             }
@@ -96,12 +97,11 @@ namespace IQVIA_Project.Controllers
             TweetsViewInRangeModel tweets = new TweetsViewInRangeModel();
 
             string start_date_string = sanitize_time_stamp(startDate);
+            string end_date = sanitize_time_stamp(endDate);
+
             DateTime start_date = DateTime.Parse(start_date_string);
 
-            var sanitized_time = startDate.ToLocalTime();
-
             tweets.start_date = startDate;
-            string end_date = sanitize_time_stamp(endDate);
             tweets.end_date = endDate;
 
             using (HttpClient request = new HttpClient())
@@ -129,7 +129,7 @@ namespace IQVIA_Project.Controllers
                                     tweets.tweetList.Add(twt);
                                     tweets.tweet_count++;
                                 }
-                                else
+                                else if(tweets.tweetIDs.Contains(twt.id))
                                 {
                                     tweets.duplicate_count++;
                                 }
@@ -141,7 +141,6 @@ namespace IQVIA_Project.Controllers
                         }
                         else // bad response
                         {
-
                             lessThan100 = true;
                         }
                     }
@@ -149,7 +148,7 @@ namespace IQVIA_Project.Controllers
 
             }
 
-            return View();
+            return View(tweets);
         }
 
         public IActionResult Index()
@@ -176,6 +175,8 @@ namespace IQVIA_Project.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+
+        // Takes a DateTime object and returns a string in the UTC format specified by IQVIA 'Bad API'
         private string sanitize_time_stamp(DateTime date)
         {
             DateTime d = date.AddDays(-31);
