@@ -1,0 +1,16 @@
+﻿
+@model TweetsViewInRangeModel
+@{
+    <h2>No. Tweets Found: @Model.tweet_count</h2>
+    <h2>Duplicate Tweets: @Model.duplicate_count</h2>
+    <h3>From: @Model.start_date</h3>
+    <h3>To: @Model.end_date</h3>
+}
+@foreach (var tweet in Model.tweetList)
+{
+    <p>id: @tweet.id</p>
+    <p>text: @tweet.text</p>
+    <p>stamp: @tweet.stamp</p>
+}
+
+
