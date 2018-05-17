@@ -15,8 +15,7 @@ let url = `${baseURL}?startDate=${startDate}&endDate=${endDate}`;
 
 function getTweets(){
 
-    console.log("");
-    console.log("Fetching Tweets from Bad API ---- one moment...");
+    console.log("\nFetching Tweets from Bad API ---- one moment...");
 
     return new Promise((resolve, reject) => {
         getTweetsFromIQVIA(url);
