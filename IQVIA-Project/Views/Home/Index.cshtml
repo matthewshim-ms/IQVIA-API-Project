@@ -2,6 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="matt-custom-block">
+    <p class="font-weight-bold"><b>Finds all Tweets from 01/01/2016 - 12/31/2017</b></p>
     <form asp-controller="Home" asp-action="GetTweets" method="post">
         <button type="submit" class="btn-primary">Get Tweets </button>
     </form>
@@ -9,9 +10,9 @@
 
 @model TweetsViewInRangeModel
 <div class="matt-custom-block">
+    <p class="font-weight-bold"><b>Specify another range of dates:</b> </p>
     <form asp-controller="Home" asp-action="GetTweetsInRange" method="post">
         <div class="form-group">
-            <label>Specify Date Range: </label>
             <label for="start_date">Start Date:</label>
             <input type="datetime-local" asp-for="start_date" name="startDate" />
             <label for="end_date">End Date:</label>
