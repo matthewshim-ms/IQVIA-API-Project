@@ -46,7 +46,13 @@ app.get('/getTweets', function(req, res, next){
 
     let url = `${baseURL}?startDate=${startDate}&endDate=${endDate}`;
 
-    function getTweetsFromIQVIA(url, callback){
+    function getTweets(){
+        return new Promise((resolve, reject) => {
+            getTweetsFromIQVIA(url);
+        })
+    }
+
+    function getTweetsFromIQVIA(url){
 
         request.get({
             url: url,
@@ -89,7 +95,7 @@ app.get('/getTweets', function(req, res, next){
 
                     // console.log(nextUrl);
                     
-                    getTweetsFromIQVIA(nextUrl, callback);
+                    getTweetsFromIQVIA(nextUrl);
                 }else{
                     // **CALLBACK 
                     displayToConsole();
@@ -114,8 +120,12 @@ app.get('/getTweets', function(req, res, next){
         console.log(context.tweet_list);
     }
 
-    getTweetsFromIQVIA(url).then;
+    function errorMessage(){
+        console.log("Something went horribly wrong =(");
+    }
 
+    const query = getTweets();
+    query.then(displayToConsole, errorMessage);
 });
 
 
