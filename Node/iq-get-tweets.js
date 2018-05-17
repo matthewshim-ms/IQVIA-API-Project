@@ -6,7 +6,6 @@ let baseURL = `https://badapi.iqvia.io/api/v1/Tweets`;
 let startDate = "2016-01-01T00:00:00.001Z";
 let endDate = "2017-12-31T23%3A59%3A59.001Z";
 
-let  = {};
 let tweet_list = [];
 let Hashmap_Tweet_Ids = {};
 let duplicateCount = 0;
