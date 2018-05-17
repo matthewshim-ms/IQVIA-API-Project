@@ -1,9 +1,17 @@
 ﻿
 
 @model TweetsViewModel
+@{ 
+    <div>
+        <h2>Query Results:</h2>
+        <h3>No. Tweets Found: @Model.tweet_count</h3>
+        <h3>Duplicates Detected (not added): @Model.duplicate_count</h3>
+    </div>
+}
 @foreach (var tweet in Model.tweetList)
 {
     <p>id: @tweet.id</p>
     <p>text: @tweet.text</p>
     <p>stamp: @tweet.stamp</p>
+    <hr />
 }
