@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var request = require('request');
-// var async = require('async')
 
 var handleBars = require('express-handlebars').create({
     defaultLayout: 'main',
@@ -24,7 +23,6 @@ app.engine('handlebars', handleBars.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, "views"));
 
-
 // Page Routes
 app.get('/', function(req, res){
     return res.render('index');
@@ -32,8 +30,6 @@ app.get('/', function(req, res){
 
 app.get('/getTweets', function(req, res, next){
     
-    // Source: https://stackoverflow.com/questions/48339532/how-to-make-multiple-paginated-get-requests-to-an-api-in-while-loop-with-node-js
-
     let baseURL = `https://badapi.iqvia.io/api/v1/Tweets`;
     let startDate = "2016-01-01T00:00:00.001Z";
     let endDate = "2017-12-31T23%3A59%3A59.001Z";
@@ -42,7 +38,6 @@ app.get('/getTweets', function(req, res, next){
     context.tweet_list = [];
     let Hashmap_Tweet_Ids = {};
     let duplicateCount = 0;
-
 
     let url = `${baseURL}?startDate=${startDate}&endDate=${endDate}`;
 
@@ -98,7 +93,7 @@ app.get('/getTweets', function(req, res, next){
                     getTweetsFromIQVIA(nextUrl);
                 }else{
                     // **CALLBACK 
-                    displayToConsole();
+                    console.log("DONE");
                 }
             }else{
                 console.log(err);
