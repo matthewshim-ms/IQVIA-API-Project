@@ -25,6 +25,7 @@ node iq-get-tweets.js
 **Features to implement:**
 
 For CLI:
+- [ ] **FIX UTC DATE Offset**
 - [ ] User prompts in CLI, specify date range, file format, etc.
 - [ ] Prompt for save instead of direct download
 

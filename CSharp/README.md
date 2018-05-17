@@ -34,6 +34,7 @@ By default this will launch the application on **http://localhost:60358**. Open 
 - [ ] Database? 
 
 **General:
+- [x] **FIX UTC DATE Offset**
 - [ ] Error handling
 - [ ] More testing
 - [ ] Re-factor code
