@@ -6,8 +6,8 @@ let baseURL = `https://badapi.iqvia.io/api/v1/Tweets`;
 let startDate = "2016-01-01T00:00:00.001Z";
 let endDate = "2017-12-31T23%3A59%3A59.001Z";
 
-let context = {};
-context.tweet_list = [];
+let  = {};
+let tweet_list = [];
 let Hashmap_Tweet_Ids = {};
 let duplicateCount = 0;
 
@@ -45,7 +45,7 @@ function getTweetsFromIQVIA(url){
                     Hashmap_Tweet_Ids[t.id] = true;
 
                     // add tweet to list
-                    context.tweet_list.push(t);
+                    tweet_list.push(t);
 
                     dates.push(t.stamp);
                 }else if(t.id in Hashmap_Tweet_Ids){
@@ -74,7 +74,7 @@ function getTweetsFromIQVIA(url){
                 // save to .txt file
                 var file = fs.createWriteStream('tweet-data.txt');
                 file.on('error', function(err){console.log(err)});
-                context.tweet_list.forEach(function(t){file.write(`id: ${t.id}\r\ntext: ${t.text}\r\nstamp: ${t.stamp}\r\n`+ '\r\n')});
+                tweet_list.forEach(function(t){file.write(`id: ${t.id}\r\ntext: ${t.text}\r\nstamp: ${t.stamp}\r\n`+ '\r\n')});
                 console.log("Results saved to tweet-data.txt");
                 file.end();
             }
@@ -91,12 +91,11 @@ function sortDates(a, b){
 }
 
 function displayToConsole(){
-    console.log("");
-    console.log("======== TWEETS ==============");
-    var tweet_count = context.tweet_list.length;
+    console.log("\n======== TWEETS ==============");
+    var tweet_count = tweet_list.length;
 
-    console.log(context.tweet_list);
-    console.log("----------------------------------\n");
+    console.log(tweet_list);
+    console.log("\n----------------------------------\n");
     console.log(`Tweets Found: ${tweet_count}, Duplicates Detected: ${duplicateCount}\n`);
     console.log("----------------------------------");
 }
